@@ -1,0 +1,7 @@
+*.fasta
+*.fna
+*.gz
+output/
+# tools
+minimap2/
+best
