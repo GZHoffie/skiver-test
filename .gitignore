@@ -5,3 +5,9 @@ output/
 # tools
 minimap2/
 best
+
+# data
+SRR*
+ERR*
+data/zymo
+
