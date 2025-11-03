@@ -17,6 +17,23 @@ pip3 install git+https://github.com/rrwick/Badread.git
 badread --help
 ```
 
+## Seqtk
+
+Seqtk is used for subsampling read datasets for analysis with various coverages.
+
+```bash
+git clone https://github.com/lh3/seqtk.git;
+cd seqtk; make
+```
+
+## KMC
+
+KMC for counting how many k-mers are error free.
+
+```bash
+conda install bioconda::kmc
+```
+
 ## Minimap2
 
 Minimap2 to generate SAM alignment file against some reference file.

@@ -1,4 +1,5 @@
 *.fasta
+*.fastq
 *.fna
 *.gz
 output/
