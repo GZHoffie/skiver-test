@@ -58,3 +58,19 @@ chmod +x ./best
 
 Test the binary using `./best`.
 
+# Scripts for running the tools
+
+## Best + Minimap2
+
+For single-end reads, run the script
+
+```bash
+# Assuming at base directory
+./tools/run_best_minimap.sh ${read_file} ${reference_file} ${output_dir} ${output_prefix}
+```
+
+For paired-end reads, run the script
+
+```bash
+./tools/run_best_minimap_pair_end.sh ${read_file_1} ${read_file_2} ${reference_file} ${output_dir} ${output_prefix}
+```
