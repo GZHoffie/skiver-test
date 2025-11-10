@@ -34,7 +34,7 @@ if __name__ == "__main__":
     parser.add_argument("-K", "--k_max", type=int, required=True, help="Maximum k-mer size.")
 
     parser.add_argument("-b", "--best_stats", type=str, required=True, help="Path to best identity stats CSV files.")
-    parser.add_argument("-o", "--output", type=str, required=True, help="Path to output CSV file.")
+    #parser.add_argument("-o", "--output", type=str, required=True, help="Path to output CSV file.")
 
     args = parser.parse_args()
 
@@ -45,4 +45,4 @@ if __name__ == "__main__":
         'num_matched_kmers': matched_kmer_list
     })
 
-    result_df.to_csv(args.output, index=False)
+    result_df.to_csv(args.best_stats + ".matched_kmers.csv", index=False)
