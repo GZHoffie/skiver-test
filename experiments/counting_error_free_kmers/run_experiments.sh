@@ -1,31 +1,20 @@
-k=(18 19 20 21 22 23 24 25 26 27 28 29 30 31)
+kmin=1
+kmax=100
 
-kvmer_bin_path="/home/zhenhao/kv-mer/target/release/kvmer"
-output_dir="./output/counting_error_free_kmers"
+best_stats=(./output/zymo/ERR3152366
+            ./output/zymo/ERR2935851_ref
+            ./output/zymo/ERR2935851_assembly
+            ./output/zymo/SRR7415629_ref
+            ./output/zymo/SRR7415629_assembly)
 
-mkdir -p $output_dir
+# Run new version of best
+~/best/target/release/best ./output/zymo/ERR3152366.bam ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ./output/zymo/ERR3152366
+~/best/target/release/best ./output/zymo/ERR2935851_ref.bam ./data/zymo/ZymoBIOMICS.STD.refseq.v2/Genomes/Bacillus_subtilis_complete_genome.fasta ./output/zymo/ERR2935851_ref
+~/best/target/release/best ./output/zymo/ERR2935851_assembly.bam ./data/zymo/mCaller_analysis_scripts/assemblies/bsubtilis_pb.fasta ./output/zymo/ERR2935851_assembly
+~/best/target/release/best ./output/zymo/SRR7415629_ref.bam ./data/zymo/ZymoBIOMICS.STD.refseq.v2/Genomes/Bacillus_subtilis_complete_genome.fasta ./output/zymo/SRR7415629_ref
+~/best/target/release/best ./output/zymo/SRR7415629_assembly.bam ./data/zymo/mCaller_analysis_scripts/assemblies/bsubtilis_pb.fasta ./output/zymo/SRR7415629_assembly
 
-echo "" > $output_dir/ERR3152366_mapping.log
-#echo "" > $output_dir/SRR7415629_mapping.log
-#echo "" > $output_dir/ERR2935851_mapping.log
-#echo "" > $output_dir/Ecoli_K12_MG1655_id_96_mapping.log
 
-
-# Count the per read k-mer matching statistics
-for ki in "${k[@]}"; do
-    #echo "Counting k-mers with k=$ki" >> $output_dir/ERR3152366.txt
-    $kvmer_bin_path map ./data/zymo/ERR3152366.fastq.gz -r ./data/ZymoBIOMICS.STD.refseq.v2/all_genomes.fasta \
-         -k $ki -t 0 -c 20 -s 100 2>> $output_dir/ERR3152366_mapping.log
-
-    #echo "Counting k-mers with k=$ki" >> $output_dir/SRR7415629.txt
-    #$kvmer_bin_path mapping ./data/zymo/SRR7415629.fastq -r ~/tp-test/data/ZymoBIOMICS.STD.refseq.v2/Genomes/Bacillus_subtilis_complete_genome.fasta \
-    #     -k $ki -t 0 -c 20 -s 100 2>> $output_dir/SRR7415629_mapping.txt
-
-    #echo "Counting k-mers with k=$ki" >> $output_dir/ERR2935851.txt
-    #$kvmer_bin_path mapping ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz -r ~/tp-test/data/ZymoBIOMICS.STD.refseq.v2/Genomes/Bacillus_subtilis_complete_genome.fasta \
-    #     -k $ki -t 0 -c 20 -s 100 2>> $output_dir/ERR2935851_mapping.txt
-
-    #echo "Counting k-mers with k=$ki" >> $output_dir/Ecoli_K12_MG1655_id_96.txt
-    #$kvmer_bin_path mapping ./data/simulated_data/Ecoli_K12_MG1655_random_depth_64_id_96.fastq -r ./data/reference/Ecoli_K12_MG1655.fasta \
-    #     -k $ki -t 0 -c 20 -s 100 2>> $output_dir/Ecoli_K12_MG1655_id_96_mapping.txt
+for stat_path in ${best_stats[@]}; do
+    python experiments/counting_error_free_kmers/count_mapped_kmers.py -k $kmin -K $kmax -b ${stat_path} 
 done
