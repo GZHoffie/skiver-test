@@ -3,17 +3,22 @@ import argparse
 import pathlib
 
 def kmer_match_profile(k_min, k_max, best_stats):
-    identity_df = pd.read_csv(best_stats + ".summary_identity_stats.csv")
+    sequence_length_df = pd.read_csv(best_stats + ".summary_sequence_length_stats.csv")
     consecutive_match_df = pd.read_csv(best_stats + ".summary_consecutive_match_stats.csv")
 
-    num_aligned_bases = identity_df['num_aligned_bases'].sum()
-    num_sequences = identity_df['primary_alns'].sum()
 
     k_list = []
     matched_kmer_list = []
 
     for k in range(k_min, k_max + 1):
-        num_kmers = num_aligned_bases + (1 - k) * num_sequences
+        # Count the total number of k-mers in the read set
+        sequence_length_df['num_kmers'] = sequence_length_df['sequence_length'].apply(
+            lambda x: max(0, x - k + 1)
+        )
+        sequence_length_df['num_kmers'] = sequence_length_df['num_kmers'] * sequence_length_df['count']
+        num_kmers = sequence_length_df['num_kmers'].sum()
+
+        # Count the number of matched k-mers based on consecutive matches
         consecutive_match_df['kmer_matches'] = consecutive_match_df['consecutive_match_length'].apply(
             lambda x: max(0, x - k + 1)
         )
@@ -42,7 +47,7 @@ if __name__ == "__main__":
 
     result_df = pd.DataFrame({
         'k': k_list,
-        'num_matched_kmers': matched_kmer_list
+        'num_kmer_hit': matched_kmer_list
     })
 
     result_df.to_csv(args.best_stats + ".matched_kmers.csv", index=False)
