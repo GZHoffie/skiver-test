@@ -7,6 +7,7 @@ identifier="Ecoli_K12_MG1655_random"
 
 mkdir -p $output_path
 
+# Heterogeneous error rates
 for depth in ${coverage[@]}; do
   for id in ${identity[@]}; do
     output_file=${output_path}/${identifier}_depth_${depth}_id_${id}.fastq
@@ -17,6 +18,38 @@ for depth in ${coverage[@]}; do
   done
 done
 
+# Homogeneous error rates (--identity ${id},100,0)
+for depth in ${coverage[@]}; do
+  for id in ${identity[@]}; do
+    output_file=${output_path}/${identifier}_depth_${depth}_id_${id}_homogeneous.fastq
+    badread simulate --reference ${genome_path} --quantity ${depth}x --error_model "random" \
+        --qscore_model ideal --glitches 0,0,0 --junk_reads 0 --random_reads 0 --chimeras 0 \
+        --identity ${id},100,0 --length 2000,1000 --start_adapter_seq "" --end_adapter_seq "" \
+        > ${output_file}
+  done
+done
+
+# Homogeneous error rates with nanopore error model (--identity ${id},100,0 -error_model "nanopore2023")
+for depth in ${coverage[@]}; do
+  for id in ${identity[@]}; do
+    output_file=${output_path}/${identifier}_depth_${depth}_id_${id}_homogeneous_nanopore.fastq
+    badread simulate --reference ${genome_path} --quantity ${depth}x --error_model "nanopore2023" \
+        --qscore_model ideal --glitches 0,0,0 --junk_reads 0 --random_reads 0 --chimeras 0 \
+        --identity ${id},100,0 --length 2000,1000 --start_adapter_seq "" --end_adapter_seq "" \
+        > ${output_file}
+  done
+done
+
+# Homogeneous error rates with nanopore error model (--identity ${id},100,0 -error_model "nanopore2023")
+for depth in ${coverage[@]}; do
+  for id in ${identity[@]}; do
+    output_file=${output_path}/${identifier}_depth_${depth}_id_${id}_nanopore.fastq
+    badread simulate --reference ${genome_path} --quantity ${depth}x --error_model "nanopore2023" \
+        --qscore_model ideal --glitches 0,0,0 --junk_reads 0 --random_reads 0 --chimeras 0 \
+        --identity ${id},100,2.5 --length 2000,1000 --start_adapter_seq "" --end_adapter_seq "" \
+        > ${output_file}
+  done
+done
 
 genome_path="./data/reference/Ecoli_O157_H7.fasta"
 identifier="Ecoli_O157_H7_random"

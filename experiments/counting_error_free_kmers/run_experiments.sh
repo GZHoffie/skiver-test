@@ -1,6 +1,29 @@
 kmin=1
 kmax=100
 
+## For simulated dataset
+prefix=(Ecoli_K12_MG1655_random_depth_64_id_96
+        Ecoli_K12_MG1655_random_depth_64_id_96_homogeneous
+        Ecoli_K12_MG1655_random_depth_64_id_96_homogeneous_nanopore
+        Ecoli_K12_MG1655_random_depth_64_id_96_nanopore)
+
+# Run alignment with minimap2
+for pref in ${prefix[@]}; do
+    ./tools/run_best_minimap.sh ./data/simulated_data/${pref}.fastq ./data/reference/Ecoli_K12_MG1655.fasta ./output/simulated_data ${pref}
+done
+
+for pref in ${prefix[@]}; do
+    python experiments/counting_error_free_kmers/count_mapped_kmers.py -k $kmin -K $kmax -b ./output/simulated_data/${pref} 
+done
+
+
+~/best/target/release/best ./output/simulated_data/Ecoli_K12_MG1655_id_98.bam ./data/reference/Ecoli_K12_MG1655.fasta ./output/simulated_data/Ecoli_K12_MG1655_id_98
+
+for stat_path in ${best_stats[@]}; do
+    python experiments/counting_error_free_kmers/count_mapped_kmers.py -k $kmin -K $kmax -b ${stat_path} 
+done
+
+## For zymo dataset
 best_stats=(./output/zymo/ERR3152366
             ./output/zymo/ERR2935851_ref
             ./output/zymo/ERR2935851_assembly
