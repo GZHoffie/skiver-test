@@ -1,0 +1,2 @@
+deacon index fetch panhuman-1
+deacon filter -d panhuman-1.k31w15.idx ./data/simulated_data/Ecoli_K12_MG1655_random_depth_64_id_98.fastq -o ./output/decontamination/Ecoli_K12_MG1655_random_depth_64_id_98_filt.fastq -r 0.05
