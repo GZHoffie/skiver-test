@@ -2,6 +2,9 @@
 *.fastq
 *.fna
 *.gz
+*.csv
+*.kvmer
+*.idx
 output/
 # tools
 minimap2/
