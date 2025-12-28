@@ -6,7 +6,7 @@ output_prefix=$4
 output_dir=$3
 
 minimap2_path="./tools/minimap2/minimap2"
-best_path="/home/zhenhao/best/target/release/best"
+best_path="../best/target/release/best"
 
 mkdir -p ${output_dir}
 

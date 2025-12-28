@@ -9,6 +9,8 @@ output/
 # tools
 minimap2/
 best
+graphmap2
+Winnowmap
 
 # data
 SRR*

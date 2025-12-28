@@ -46,6 +46,28 @@ cd minimap2 && make
 
 The binary would be under `./minimap2/minimap2`.
 
+## GraphMap
+
+```bash
+git clone https://github.com/lbcb-sci/graphmap2  
+cd graphmap2  
+make modules  
+make  
+```
+
+## Winnowmap2
+
+```bash
+#sudo apt-get install libcurl4-openssl-dev
+#sudo apt install liblzma-dev
+#sudo apt install libbz2-dev
+
+git clone https://github.com/marbl/Winnowmap.git
+cd Winnowmap
+make -j8
+```
+
+
 ## BEST
 
 BEST is used to infer sequencing error rate from SAM files. Download directly from their release 0.1.0.
