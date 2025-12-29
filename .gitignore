@@ -11,6 +11,10 @@ minimap2/
 best
 graphmap2
 Winnowmap
+kmc
+seqtk
+genomescope2.0
+yak
 
 # data
 SRR*
