@@ -1,5 +1,5 @@
 identity=(100 98 96 94 92 90)
-coverage=(64)
+coverage=(128)
 output_path="./data/simulated_data"
 genome_path="./data/reference/Ecoli_K12_MG1655.fasta"
 identifier="Ecoli_K12_MG1655_random"
