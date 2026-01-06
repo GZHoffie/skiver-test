@@ -36,11 +36,19 @@ b_subtilis_assembly="./data/zymo/mCaller_analysis_scripts/assemblies/bsubtilis_p
 
 
 
+
 for file in ${output_dir}/*.summary_identity_stats.csv; do
     echo "Processing $file ..."
     # get the basename without everything behind ".summary_identity_stats.csv"
     filename=$(basename -- "$file")
-    filename="${filename%.summary_identity_stats.csv}.mapped_kmers.txt"
+    filename="${filename%.summary_identity_stats.csv}"
 
     python ./experiments/counting_error_free_kmers/count_mapped_kmers.py -k 1 -K 100 -b ${output_dir}/$filename
 done
+
+
+# kvmer
+kvmer_dir="../kv-mer/target/release/kvmer"
+/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer.time -v ${kvmer_dir} analyze ./data/zymo/ERR3152366.fastq.gz -o ${output_dir}/ERR3152366_kvmer_verbose.csv --hazard-ratio ${output_dir}/ERR3152366_kvmer_hazard_ratio.csv 2> ${output_dir}/log/ERR3152366_kvmer.log > ${output_dir}/ERR3152366_kvmer.csv
+/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer.time -v ${kvmer_dir} analyze ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz -o ${output_dir}/ERR2935851_kvmer_verbose.csv --hazard-ratio ${output_dir}/ERR2935851_kvmer_hazard_ratio.csv 2> ${output_dir}/log/ERR2935851_kvmer.log > ${output_dir}/ERR2935851_kvmer.csv
+/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer.time -v ${kvmer_dir} analyze ./data/zymo/SRR7498042.fastq -o ${output_dir}/SRR7498042_kvmer_verbose.csv --hazard-ratio ${output_dir}/SRR7498042_kvmer_hazard_ratio.csv 2> ${output_dir}/log/SRR7498042_kvmer.log > ${output_dir}/SRR7498042_kvmer.csv
