@@ -23,8 +23,17 @@ prefetch SRR7415629
 
 fasterq-dump SRR7415629 --split-files -O ./data/zymo/
 
+# Download PacBio RSII reads
+prefetch SRR7498042
+fasterq-dump SRR7498042 --split-files -O ./data/zymo/
+
 # Download Bacillus subtilis assembly
 git clone https://github.com/al-mcintyre/mCaller_analysis_scripts.git
+
+# ATCC PacBio reads
+mkdir -p ./data/ATCC/
+prefetch SRR9202034
+fasterq-dump SRR9202034 --split-files -O ./data/ATCC/
 
 
 # Download Human Reads (HG002)
@@ -35,6 +44,10 @@ wget https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/scratch/HG002/sequ
 # Human reference
 wget https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/HG002/assemblies/hg002v1.1.fasta.gz
 
+# Hifi reads
+wget https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/scratch/HG002/sequencing/hifi/m84031_231217_034919_s2.hifi_reads.fastq.gz
 
 # Download Zymo community nanopore reads R10.4
 wget https://s3.climb.ac.uk/nanopore/Zymo-GridION-EVEN-BB-SN-PCR-R10HC-flipflop.fq.gz
+# R9.4.1
+wget https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/scratch/HG002/sequencing/ont/03_08_22_R941_HG002_2_Guppy_6.0.6_prom_sup.fastq.gz

@@ -2,10 +2,11 @@ kmin=1
 kmax=100
 
 ## For simulated dataset
-prefix=(Ecoli_K12_MG1655_random_depth_64_id_96
+prefix=(Ecoli_K12_MG1655_random_depth_64_id_90_homogeneous
+        Ecoli_K12_MG1655_random_depth_64_id_92_homogeneous
+        Ecoli_K12_MG1655_random_depth_64_id_94_homogeneous
         Ecoli_K12_MG1655_random_depth_64_id_96_homogeneous
-        Ecoli_K12_MG1655_random_depth_64_id_96_homogeneous_nanopore
-        Ecoli_K12_MG1655_random_depth_64_id_96_nanopore)
+        Ecoli_K12_MG1655_random_depth_64_id_98_homogeneous)
 
 # Run alignment with minimap2
 for pref in ${prefix[@]}; do

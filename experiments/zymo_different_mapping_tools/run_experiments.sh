@@ -26,7 +26,7 @@ b_subtilis_assembly="./data/zymo/mCaller_analysis_scripts/assemblies/bsubtilis_p
 
 ## Graphmap
 /usr/bin/time -o ${output_dir}/log/ERR3152366_graphmap.time -v ./tools/run_best_graphmap.sh ./data/zymo/ERR3152366.fastq.gz ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ${output_dir} ERR3152366_graphmap &> ${output_dir}/log/ERR3152366_graphmap.log
-/usr/bin/time -o ${output_dir}/log/SRR7415629_ref_graphmap.time -v ./tools/run_best_minimap.sh ./data/zymo/SRR7415629.fastq ${b_subtilis_ref} ${output_dir} SRR7415629_ref_graphmap &> ${output_dir}/log/SRR7415629_ref_graphmap.log
+/usr/bin/time -o ${output_dir}/log/SRR7415629_ref_graphmap.time -v ./tools/run_best_graphmap.sh ./data/zymo/SRR7415629.fastq ${b_subtilis_ref} ${output_dir} SRR7415629_ref_graphmap &> ${output_dir}/log/SRR7415629_ref_graphmap.log
 
 ## WInnowmap
 /usr/bin/time -o ${output_dir}/log/ERR3152366_winnowmap.time -v ./tools/run_best_winnowmap.sh ./data/zymo/ERR3152366.fastq.gz ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ${output_dir} ERR3152366_winnowmap &> ${output_dir}/log/ERR3152366_winnowmap.log
