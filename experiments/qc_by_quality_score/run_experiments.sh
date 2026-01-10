@@ -10,4 +10,6 @@ mkdir -p ${output_dir}/log
 /usr/bin/time -o ${output_dir}/log/ERR2935851_2_seqtk.time -v ${seqtk_dir} fqchk -q0 ./data/zymo/ERR2935851_2.fastq.gz > ${output_dir}/zymo_ERR2935851_2_seqtk.fqchk.txt
 /usr/bin/time -o ${output_dir}/log/SRR7415629_seqtk.time -v ${seqtk_dir} fqchk -q0 ./data/zymo/SRR7415629.fastq > ${output_dir}/zymo_SRR7415629_seqtk.fqchk.txt
 /usr/bin/time -o ${output_dir}/log/SRR7498042_seqtk.time -v ${seqtk_dir} fqchk -q0 ./data/zymo/SRR7498042.fastq > ${output_dir}/zymo_SRR7498042_seqtk.fqchk.txt
-/usr/bin/time -o ${output_dir}/log/HG002_R10.4_seqtk.time -v ${seqtk_dir} fqchk -q0 ./data/HG002/12_1_22_R1041_ULCIR_HG002_1_dorado0.4.0_sup4.1.0_5mCG_5hmCG.fastq.gz > ${output_dir}/HG002_R10.4_seqtk.fqchk.txt
+/usr/bin/time -o ${output_dir}/log/HG002_seqtk.time -v ${seqtk_dir} fqchk -q0 ./data/HG002/12_1_22_R1041_ULCIR_HG002_1_dorado0.4.0_sup4.1.0_5mCG_5hmCG.fastq.gz > ${output_dir}/HG002_seqtk.fqchk.txt
+/usr/bin/time -o ${output_dir}/log/HG002_R941_seqtk.time -v ${seqtk_dir} fqchk -q0 ./data/HG002/03_08_22_R941_HG002_2_Guppy_6.0.6_prom_sup.fastq.gz > ${output_dir}/HG002_R941_seqtk.fqchk.txt
+/usr/bin/time -o ${output_dir}/log/HG002_hifi_seqtk.time -v ${seqtk_dir} fqchk -q0 ./data/HG002/m84031_231217_034919_s2.hifi_reads.fastq.gz > ${output_dir}/HG002_hifi_seqtk.fqchk.txt

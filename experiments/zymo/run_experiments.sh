@@ -55,12 +55,40 @@ kvmer_dir="../kv-mer/target/release/kvmer"
 
 /usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer.time -v ${kvmer_dir} analyze ./data/zymo/SRR7498042.fastq -o ${output_dir}/SRR7498042_kvmer_verbose.csv --hazard-ratio ${output_dir}/SRR7498042_kvmer_hazard_ratio.csv 2> ${output_dir}/log/SRR7498042_kvmer.log > ${output_dir}/SRR7498042_kvmer.csv
 
+# Sketching
 /usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_sketch.time -v ${kvmer_dir} sketch ./data/zymo/ERR3152366.fastq.gz -o ${output_dir}/ERR3152366.kvmer  2> ${output_dir}/log/ERR3152366_kvmer_sketch.log
 /usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_sketch.time -v ${kvmer_dir} sketch ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz -o ${output_dir}/ERR2935851.kvmer  2> ${output_dir}/log/ERR2935851_kvmer_sketch.log
 /usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_sketch.time -v ${kvmer_dir} sketch ./data/zymo/SRR7498042.fastq -o ${output_dir}/SRR7498042.kvmer  2> ${output_dir}/log/SRR7498042_kvmer_sketch.log 
 /usr/bin/time -o ${output_dir}/log/ERR2935851_trim_kvmer_sketch.time -v ${kvmer_dir} sketch ./data/zymo/ERR2935851_1.trim.fastq.gz ./data/zymo/ERR2935851_2.trim.fastq.gz -o ${output_dir}/ERR2935851_trim.kvmer  2> ${output_dir}/log/ERR2935851_trim_kvmer_sketch.log
+# Sketching --bidirectional
+/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_sketch_bi.time -v ${kvmer_dir} sketch --bidirectional ./data/zymo/ERR3152366.fastq.gz -o ${output_dir}/ERR3152366_bi.kvmer  2> ${output_dir}/log/ERR3152366_kvmer_sketch_bi.log
+/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_sketch_bi.time -v ${kvmer_dir} sketch --bidirectional ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz -o ${output_dir}/ERR2935851_bi.kvmer  2> ${output_dir}/log/ERR2935851_kvmer_sketch_bi.log
+/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_sketch_bi.time -v ${kvmer_dir} sketch --bidirectional ./data/zymo/SRR7498042.fastq -o ${output_dir}/SRR7498042_bi.kvmer  2> ${output_dir}/log/SRR7498042_kvmer_sketch_bi.log
+/usr/bin/time -o ${output_dir}/log/ERR2935851_trim_kvmer_sketch_bi.time -v ${kvmer_dir} sketch --bidirectional ./data/zymo/ERR2935851_1.trim.fastq.gz ./data/zymo/ERR2935851_2.trim.fastq.gz -o ${output_dir}/ERR2935851_trim_bi.kvmer  2> ${output_dir}/log/ERR2935851_trim_kvmer_sketch_bi.log
 
+
+
+# Analyze without reference
 /usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_analyze.time -v ${kvmer_dir} analyze ${output_dir}/ERR3152366.kvmer --hazard-ratio ${output_dir}/ERR3152366_kvmer_hazard_ratio.csv > ${output_dir}/ERR3152366_kvmer.csv 2> ${output_dir}/log/ERR3152366_kvmer_analyze.log
 /usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_analyze.time -v ${kvmer_dir} analyze ${output_dir}/ERR2935851.kvmer --hazard-ratio ${output_dir}/ERR2935851_kvmer_hazard_ratio.csv > ${output_dir}/ERR2935851_kvmer.csv 2> ${output_dir}/log/ERR2935851_kvmer_analyze.log
 /usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_analyze.time -v ${kvmer_dir} analyze ${output_dir}/SRR7498042.kvmer --hazard-ratio ${output_dir}/SRR7498042_kvmer_hazard_ratio.csv > ${output_dir}/SRR7498042_kvmer.csv 2> ${output_dir}/log/SRR7498042_kvmer_analyze.log
 /usr/bin/time -o ${output_dir}/log/ERR2935851_trim_kvmer_analyze.time -v ${kvmer_dir} analyze ${output_dir}/ERR2935851_trim.kvmer --hazard-ratio ${output_dir}/ERR2935851_trim_kvmer_hazard_ratio.csv > ${output_dir}/ERR2935851_trim_kvmer.csv 2> ${output_dir}/log/ERR2935851_trim_kvmer_analyze.log
+# Analyze without reference --bidirectional
+/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_bi_analyze.time -v ${kvmer_dir} analyze --bidirectional ${output_dir}/ERR3152366_bi.kvmer --hazard-ratio ${output_dir}/ERR3152366_bi_kvmer_hazard_ratio.csv > ${output_dir}/ERR3152366_bi_kvmer.csv 2> ${output_dir}/log/ERR3152366_kvmer_bi_analyze.log
+/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_bi_analyze.time -v ${kvmer_dir} analyze --bidirectional ${output_dir}/ERR2935851_bi.kvmer --hazard-ratio ${output_dir}/ERR2935851_bi_kvmer_hazard_ratio.csv > ${output_dir}/ERR2935851_bi_kvmer.csv 2> ${output_dir}/log/ERR2935851_kvmer_bi_analyze.log
+/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_bi_analyze.time -v ${kvmer_dir} analyze --bidirectional ${output_dir}/SRR7498042_bi.kvmer --hazard-ratio ${output_dir}/SRR7498042_bi_kvmer_hazard_ratio.csv > ${output_dir}/SRR7498042_bi_kvmer.csv 2> ${output_dir}/log/SRR7498042_kvmer_bi_analyze.log
+/usr/bin/time -o ${output_dir}/log/ERR2935851_trim_kvmer_bi_analyze.time -v ${kvmer_dir} analyze --bidirectional ${output_dir}/ERR2935851_trim_bi.kvmer --hazard-ratio ${output_dir}/ERR2935851_trim_bi_kvmer_hazard_ratio.csv > ${output_dir}/ERR2935851_trim_bi_kvmer.csv 2> ${output_dir}/log/ERR2935851_trim_kvmer_bi_analyze.log
+
+
+
+# Analyze with reference
+/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_ref_analyze.time -v ${kvmer_dir} analyze -l 1 --use-all -r ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ${output_dir}/ERR3152366.kvmer --hazard-ratio ${output_dir}/ERR3152366_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR3152366_kvmer_ref.csv 2> ${output_dir}/log/ERR3152366_kvmer_ref_analyze.log
+/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_ref_analyze.time -v ${kvmer_dir} analyze -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/ERR2935851.kvmer --hazard-ratio ${output_dir}/ERR2935851_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR2935851_kvmer_ref.csv 2> ${output_dir}/log/ERR2935851_kvmer_ref_analyze.log
+/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_ref_analyze.time -v ${kvmer_dir} analyze -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/SRR7498042.kvmer --hazard-ratio ${output_dir}/SRR7498042_kvmer_ref_hazard_ratio.csv > ${output_dir}/SRR7498042_kvmer_ref.csv 2> ${output_dir}/log/SRR7498042_kvmer_ref_analyze.log
+/usr/bin/time -o ${output_dir}/log/ERR2935851_trim_kvmer_ref_analyze.time -v ${kvmer_dir} analyze -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/ERR2935851_trim.kvmer --hazard-ratio ${output_dir}/ERR2935851_trim_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR2935851_trim_kvmer_ref.csv 2> ${output_dir}/log/ERR2935851_trim_kvmer_ref_analyze.log
+
+# Analyze with reference --bidirectional
+/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_bi_ref_analyze.time -v ${kvmer_dir} analyze --bidirectional -l 1 --use-all -r ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ${output_dir}/ERR3152366_bi.kvmer --hazard-ratio ${output_dir}/ERR3152366_bi_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR3152366_bi_kvmer_ref.csv 2> ${output_dir}/log/ERR3152366_kvmer_bi_ref_analyze.log
+/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_bi_ref_analyze.time -v ${kvmer_dir} analyze --bidirectional -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/ERR2935851_bi.kvmer --hazard-ratio ${output_dir}/ERR2935851_bi_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR2935851_bi_kvmer_ref.csv 2> ${output_dir}/log/ERR2935851_kvmer_bi_ref_analyze.log
+/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_bi_ref_analyze.time -v ${kvmer_dir} analyze --bidirectional -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/SRR7498042_bi.kvmer --hazard-ratio ${output_dir}/SRR7498042_bi_kvmer_ref_hazard_ratio.csv > ${output_dir}/SRR7498042_bi_kvmer_ref.csv 2> ${output_dir}/log/SRR7498042_kvmer_bi_ref_analyze.log
+/usr/bin/time -o ${output_dir}/log/ERR2935851_trim_kvmer_bi_ref_analyze.time -v ${kvmer_dir} analyze --bidirectional -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/ERR2935851_trim_bi.kvmer --hazard-ratio ${output_dir}/ERR2935851_trim_bi_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR2935851_trim_bi_kvmer_ref.csv 2> ${output_dir}/log/ERR2935851_trim_kvmer_bi_ref_analyze.log

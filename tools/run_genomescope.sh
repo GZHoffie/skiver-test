@@ -28,7 +28,7 @@ mkdir -p ${output_dir}
 # Run with kmc instead
 kmc_path="./tools/kmc/bin"
 mkdir -p ${output_dir}/${output_prefix}
-${kmc_path}/kmc -k21 -t10 -m32 -ci1 -cs10000 ${read_file} ${output_dir}/${output_prefix} ${output_dir}/${output_prefix}
+${kmc_path}/kmc -k21 -t1 -m32 -ci1 -cs10000 ${read_file} ${output_dir}/${output_prefix} ${output_dir}/${output_prefix}
 ${kmc_path}/kmc_tools transform ${output_dir}/${output_prefix} histogram ${output_dir}/${output_prefix}.histo -cx10000
 # remove kmc database
 rm ${output_dir}/${output_prefix}.kmc_*
