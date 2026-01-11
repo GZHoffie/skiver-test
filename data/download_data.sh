@@ -6,6 +6,13 @@
 wget https://s3.amazonaws.com/zymo-files/BioPool/ZymoBIOMICS.STD.refseq.v2.zip
 unzip ZymoBIOMICS.STD.refseq.v2.zip
 rm ZymoBIOMICS.STD.refseq.v2.zip
+cat ZymoBIOMICS.STD.refseq.v2.zip/Genomes/*.fasta > ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta
+
+# Zymo Gut Microbiome reference genomes
+wget https://s3.amazonaws.com/zymo-files/BioPool/D6331.refseq.zip
+unzip D6331.refseq.zip 
+rm D6331.refseq.zip
+cat D6331.refseq/genomes/*.fasta > D6331.refseq/zymo_gut_microbiome_reference.fasta
 
 
 # Merge the references into a single fasta file for minimap2
@@ -31,9 +38,8 @@ fasterq-dump SRR7498042 --split-files -O ./data/zymo/
 git clone https://github.com/al-mcintyre/mCaller_analysis_scripts.git
 
 # ATCC PacBio reads
-mkdir -p ./data/ATCC/
-prefetch SRR9202034
-fasterq-dump SRR9202034 --split-files -O ./data/ATCC/
+prefetch SRR13128014
+fasterq-dump SRR13128014 --split-files -O ./data/zymo/
 
 
 # Download Human Reads (HG002)
