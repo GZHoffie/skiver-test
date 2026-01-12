@@ -1,4 +1,4 @@
-output_dir="./output/coverage_dependence_homogeneous_l5"
+output_dir="./output/coverage_dependence"
 
 mkdir -p $output_dir
 mkdir -p ${output_dir}/log
@@ -6,10 +6,12 @@ mkdir -p ${output_dir}/log
 kvmer_dir="../kv-mer/target/release/kvmer"
 simulated_data_prefix="./data/simulated_data/Ecoli_K12_MG1655_random_depth_128"
 subsample_script="./experiments/coverage_dependence/subsample_reads.sh"
+reference_genome="./data/reference/Ecoli_K12_MG1655.fasta"
 read_identity=(90 92 94 96 98 100)
+#read_identity=(100)
 # 64x, 32x, 16x, 8x, 4x, 2x, 1x
 original_coverage=128
-subsample_coverage=(100)  #(64 32 16 8 4 2 1)
+subsample_coverage=(100 90 80 70 60 50 40 30 20 10)  #(64 32 16 8 4 2 1)
 num_experiments=20
 
 chmod +x $subsample_script
@@ -23,12 +25,35 @@ for id in ${read_identity[@]}; do
       $subsample_script ${input_file} ${subsample_rate} ./temp.fastq
       #/usr/bin/time -o ${output_dir}/log/${output_prefix}.time -v ${kvmer_dir} analyze ./temp.fastq > ${output_dir}/${output_prefix}.csv
       #/usr/bin/time -o ${output_dir}/log/${output_prefix}_bidirectional.time -v ${kvmer_dir} analyze ./temp.fastq --bidirectional > ${output_dir}/${output_prefix}_bidirectional.csv
-      ${kvmer_dir} analyze ./temp.fastq -l 5 --hazard-ratio ${output_dir}/${output_prefix}_hazard_ratio.csv > ${output_dir}/${output_prefix}.csv
-      ${kvmer_dir} analyze ./temp.fastq --bidirectional -l 5 --hazard-ratio ${output_dir}/${output_prefix}_hazard_ratio_bidirectional.csv > ${output_dir}/${output_prefix}_bidirectional.csv
+      #${kvmer_dir} analyze ./temp.fastq --hazard-ratio ${output_dir}/${output_prefix}_hazard_ratio.csv > ${output_dir}/${output_prefix}.csv
+      ${kvmer_dir} analyze ./temp.fastq --bidirectional --hazard-ratio ${output_dir}/${output_prefix}_hazard_ratio.csv > ${output_dir}/${output_prefix}.csv
+      ${kvmer_dir} analyze ./temp.fastq --bidirectional -r ${reference_genome} -l 1 --use-all --hazard-ratio ${output_dir}/${output_prefix}_ref_hazard_ratio.csv > ${output_dir}/${output_prefix}_ref.csv
+
       rm ./temp.fastq
     done
   done
 done
+
+
+# Map reads with minimap2 and run best to get alignment-based statistics
+output_dir="./output/coverage_dependence_map"
+
+mkdir -p $output_dir
+
+for id in ${read_identity[@]}; do
+  ./tools/run_best_minimap.sh ${simulated_data_prefix}_id_${id}_homogeneous.fastq ${reference_genome} ${output_dir} Ecoli_K12_MG1655_depth_128_id_${id}
+done
+
+# Find the number of k-mer hits
+for file in ${output_dir}/*.summary_identity_stats.csv; do
+    echo "Processing $file ..."
+    # get the basename without everything behind ".summary_identity_stats.csv"
+    filename=$(basename -- "$file")
+    filename="${filename%.summary_identity_stats.csv}"
+
+    python ./experiments/counting_error_free_kmers/count_mapped_kmers.py -k 1 -K 100 -b ${output_dir}/$filename
+done
+
 
 
 
