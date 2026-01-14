@@ -12,7 +12,7 @@ read_identity=(90 92 94 96 98 100)
 # 64x, 32x, 16x, 8x, 4x, 2x, 1x
 original_coverage=128
 #subsample_coverage=(100 90 80 70 60 50 40 30 20 10)  #(64 32 16 8 4 2 1)
-subsample_coverage=(128)
+#subsample_coverage=(128)
 #num_experiments=20
 num_experiments=1
 
