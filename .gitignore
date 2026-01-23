@@ -12,7 +12,7 @@ best
 graphmap2
 Winnowmap
 kmc
-KMC3.2.1.linux
+KMC3.2.4.linux.x64
 seqtk
 genomescope2.0
 yak
@@ -22,6 +22,8 @@ SRR*
 ERR*
 data/zymo
 data/Mutational_spectra_data-v1
+
+.vscode
 
 *.png
 *.idx

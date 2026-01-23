@@ -1,4 +1,4 @@
-kvmer_path="/home/ubuntu/kv-mer/target/release/kvmer"
+kvmer_path="skiver"
 output_dir="output/multiple_alleles"
 
 mkdir -p $output_dir
