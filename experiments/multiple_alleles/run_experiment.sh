@@ -33,8 +33,8 @@ for id in ${read_identity[@]}; do
       $subsample_script ${input_file1} ${ratio1} ./temp1.fastq
       $subsample_script ${input_file2} ${ratio2} ./temp2.fastq
 
-      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq --bidirectional --hazard-ratio ${output_dir}/${output_prefix}_bi_hazard_ratio.csv > ${output_dir}/${output_prefix}_bi.csv
-      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq --use-all --bidirectional --hazard-ratio ${output_dir}/${output_prefix}_bi_no_filter_hazard_ratio.csv > ${output_dir}/${output_prefix}_bi_no_filter.csv
+      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq --hazard-rate ${output_dir}/${output_prefix}_bi_hazard_ratio.csv > ${output_dir}/${output_prefix}_bi.csv
+      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq --use-all --hazard-rate ${output_dir}/${output_prefix}_bi_no_filter_hazard_ratio.csv > ${output_dir}/${output_prefix}_bi_no_filter.csv
 
 
 
