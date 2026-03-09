@@ -6,6 +6,7 @@
 *.kvmer
 *.idx
 output/
+update_skiver_results.sh
 # tools
 minimap2/
 best
