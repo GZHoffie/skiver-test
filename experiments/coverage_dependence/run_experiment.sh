@@ -26,7 +26,7 @@ for id in ${read_identity[@]}; do
       output_prefix="Ecoli_K12_MG1655_depth_${cov}_id_${id}_exp_${exp_num}"
       $subsample_script ${input_file} ${subsample_rate} ./temp.fastq
       ${kvmer_dir} analyze ./temp.fastq --hazard-rate ${output_dir}/${output_prefix}_hazard_ratio.csv -o ${output_dir}/${output_prefix}_verbose_output.csv > ${output_dir}/${output_prefix}.csv
-      ${kvmer_dir} analyze ./temp.fastq -r ${reference_genome} -l 1 --use-all --hazard-rate ${output_dir}/${output_prefix}_ref_hazard_ratio.csv -o ${output_dir}/${output_prefix}_ref_verbose_output.csv > ${output_dir}/${output_prefix}_ref.csv
+      ${kvmer_dir} analyze ./temp.fastq -r ${reference_genome} --use-all --hazard-rate ${output_dir}/${output_prefix}_ref_hazard_ratio.csv -o ${output_dir}/${output_prefix}_ref_verbose_output.csv > ${output_dir}/${output_prefix}_ref.csv
       rm ./temp.fastq
     done
   done
