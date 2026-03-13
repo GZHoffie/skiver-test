@@ -17,4 +17,4 @@ ${minimap2_path} -a ${reference_file} ${read_file} | samtools sort -o ${output_d
 ${best_path} ${output_dir}/${output_prefix}.bam ${reference_file} ${output_dir}/${output_prefix}
 
 # Remove intermediate bam file
-rm ${output_dir}/${output_prefix}.bam
+#rm ${output_dir}/${output_prefix}.bam

@@ -57,3 +57,15 @@ wget https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/scratch/HG002/sequ
 
 # Human reference
 wget https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/HG002/assemblies/hg002v1.1.fasta.gz
+
+
+cd ../.. # back to root directory
+mkdir -p ./data/environmental_samples/
+
+# soil sample, taken from supplementary data here https://www.biorxiv.org/content/10.1101/2024.12.19.629356v1.abstract
+prefetch SRR11742949
+fasterq-dump SRR11742949 --split-files -O ./data/environmental_samples/
+
+# water sample
+prefetch SRR14560391
+fasterq-dump SRR14560391 --split-files -O ./data/environmental_samples/
