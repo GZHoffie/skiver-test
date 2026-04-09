@@ -13,6 +13,12 @@ pip3 install git+https://github.com/rrwick/Badread.git
 badread --help
 ```
 
+we can also clone the repository to examine the error/qscore models.
+
+```bash
+git clone https://github.com/rrwick/Badread.git
+```
+
 ## Seqtk
 
 Seqtk is used for summarizing the quality scores in the sequencing files.
@@ -73,6 +79,22 @@ cargo build --release
 ```
 
 The executable will be located in `./best/target/release/best`.
+
+## GATK
+
+GATK for read quality score calibration
+
+```
+# Under ./tools directory
+git clone https://github.com/broadinstitute/gatk.git
+cd gatk
+
+# Note that some preliminaries are required. Install with
+#sudo apt update
+#sudo apt install openjdk-17-jdk
+#sudo apt-get install git-lfs
+./gradlew bundle
+```
 
 ## skiver
 

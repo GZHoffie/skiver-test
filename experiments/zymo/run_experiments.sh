@@ -8,9 +8,9 @@ chmod +x ./tools/run_best_minimap.sh
 chmod +x ./tools/run_best_minimap_pair_end.sh
 
 # Map and query the Zymo mock community reads, Nanopore Zymo Log dataset
-/usr/bin/time -o ${output_dir}/log/ERR3152366.time -v ./tools/run_best_minimap.sh ./data/zymo/ERR3152366.fastq.gz ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ${output_dir} ERR3152366 &> ${output_dir}/log/ERR3152366.log
+./tools/run_best_minimap.sh ./data/zymo/ERR3152366.fastq.gz ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ${output_dir} ERR3152366_z2000 &> ${output_dir}/log/ERR3152366.log
 #/usr/bin/time -o ${output_dir}/log/R10HC.time -v ./tools/run_best_minimap.sh ./data/zymo/Zymo-GridION-EVEN-BB-SN-PCR-R10HC-flipflop.fq.gz ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ${output_dir} R10HC &> ${output_dir}/log/R10HC.log
-/usr/bin/time -o ${output_dir}/log/SRR13128014.time -v ./tools/run_best_minimap.sh ./data/zymo/SRR13128014.fastq ./data/zymo/D6331.refseq/zymo_gut_microbiome_reference.fasta ${output_dir} SRR13128014 &> ${output_dir}/log/SRR13128014.log
+./tools/run_best_minimap.sh ./data/zymo/SRR13128014.fastq ./data/zymo/D6331.refseq/zymo_gut_microbiome_reference.fasta ${output_dir} SRR13128014_z2000 &> ${output_dir}/log/SRR13128014.log
 
 #/usr/bin/time -o ${output_dir}/log/ERR3152366_b_subtilis.time -v ./tools/run_best_minimap.sh ~/tp-test/data/ERR3152366.fastq.gz ./data/zymo/ZymoBIOMICS.STD.refseq.v2/Genomes/Bacillus_subtilis_complete_genome.fasta ${output_dir} ERR3152366_b_subtilis &> ${output_dir}/log/ERR3152366_b_subtilis.log
 
@@ -19,15 +19,13 @@ b_subtilis_ref="./data/zymo/ZymoBIOMICS.STD.refseq.v2/Genomes/Bacillus_subtilis_
 b_subtilis_assembly="./data/zymo/mCaller_analysis_scripts/assemblies/bsubtilis_pb.fasta"
 
 ## Minimap2
-/usr/bin/time -o ${output_dir}/log/ERR2935851_ref.time -v ./tools/run_best_minimap_pair_end.sh ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz ${b_subtilis_ref} ${output_dir} ERR2935851_ref &> ${output_dir}/log/ERR2935851_ref.log
-/usr/bin/time -o ${output_dir}/log/ERR2935851_trim_ref.time -v ./tools/run_best_minimap_pair_end.sh ./data/zymo/ERR2935851_1.trim.fastq.gz ./data/zymo/ERR2935851_2.trim.fastq.gz ${b_subtilis_ref} ${output_dir} ERR2935851_trim_ref &> ${output_dir}/log/ERR2935851_trim_ref.log
-
-/usr/bin/time -o ${output_dir}/log/ERR2935851_assembly.time -v ./tools/run_best_minimap_pair_end.sh ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz ${b_subtilis_assembly}  ${output_dir} ERR2935851_assembly &> ${output_dir}/log/ERR2935851_assembly.log
+./tools/run_best_minimap_pair_end.sh ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz ${b_subtilis_ref} ${output_dir} ERR2935851_ref_z2000 &> ${output_dir}/log/ERR2935851_ref.log
+./tools/run_best_minimap_pair_end.sh ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz ${b_subtilis_assembly}  ${output_dir} ERR2935851_assembly_z2000 &> ${output_dir}/log/ERR2935851_assembly.log
 
 
 # PacBio RSII reads on Bacillus subtilis isolates
-/usr/bin/time -o ${output_dir}/log/SRR7498042_ref.time -v ./tools/run_best_minimap.sh ./data/zymo/SRR7498042.fastq ${b_subtilis_ref} ${output_dir} SRR7498042_ref &> ${output_dir}/log/SRR7498042_ref.log
-/usr/bin/time -o ${output_dir}/log/SRR7498042_assembly.time -v ./tools/run_best_minimap.sh ./data/zymo/SRR7498042.fastq ${b_subtilis_assembly} ${output_dir} SRR7498042_assembly &> ${output_dir}/log/SRR7498042_assembly.log
+./tools/run_best_minimap.sh ./data/zymo/SRR7498042.fastq ${b_subtilis_ref} ${output_dir} SRR7498042_ref_z2000 &> ${output_dir}/log/SRR7498042_ref.log
+./tools/run_best_minimap.sh ./data/zymo/SRR7498042.fastq ${b_subtilis_assembly} ${output_dir} SRR7498042_assembly_z2000 &> ${output_dir}/log/SRR7498042_assembly.log
 
 
 

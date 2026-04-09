@@ -8,7 +8,7 @@ mkdir -p $output_dir
 #$kvmer_path analyze ./data/simulated_data/Ecoli_O157_H7_random_depth_64_id_96.fastq -o ${output_dir}/O157_H7_output.csv &> ${output_dir}/O157_H7_output.log
 
 
-kvmer_dir="../kv-mer/target/release/kvmer"
+kvmer_dir="skiver"
 simulated_data1_prefix="./data/simulated_data/Ecoli_K12_MG1655_random_depth_64"
 simulated_data2_prefix="./data/simulated_data/Ecoli_O157_H7_random_depth_64"
 subsample_script="./experiments/coverage_dependence/subsample_reads.sh"
@@ -33,10 +33,8 @@ for id in ${read_identity[@]}; do
       $subsample_script ${input_file1} ${ratio1} ./temp1.fastq
       $subsample_script ${input_file2} ${ratio2} ./temp2.fastq
 
-      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq --hazard-rate ${output_dir}/${output_prefix}_bi_hazard_ratio.csv > ${output_dir}/${output_prefix}_bi.csv
-      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq --use-all --hazard-rate ${output_dir}/${output_prefix}_bi_no_filter_hazard_ratio.csv > ${output_dir}/${output_prefix}_bi_no_filter.csv
-
-
+      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq -o ${output_dir}/${output_prefix}
+      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq --use-all -o ${output_dir}/${output_prefix}_no_filter
 
       rm ./temp1.fastq ./temp2.fastq
     done

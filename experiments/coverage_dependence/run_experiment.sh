@@ -14,7 +14,7 @@ original_coverage=128
 subsample_coverage=(100 90 80 70 60 50 40 30 20 10)  #(64 32 16 8 4 2 1)
 #subsample_coverage=(128)
 #num_experiments=20
-num_experiments=1
+num_experiments=20
 
 chmod +x $subsample_script
 
@@ -25,8 +25,8 @@ for id in ${read_identity[@]}; do
     for exp_num in $(seq 1 $num_experiments); do
       output_prefix="Ecoli_K12_MG1655_depth_${cov}_id_${id}_exp_${exp_num}"
       $subsample_script ${input_file} ${subsample_rate} ./temp.fastq
-      ${kvmer_dir} analyze ./temp.fastq --hazard-rate ${output_dir}/${output_prefix}_hazard_ratio.csv -o ${output_dir}/${output_prefix}_verbose_output.csv > ${output_dir}/${output_prefix}.csv
-      ${kvmer_dir} analyze ./temp.fastq -r ${reference_genome} --use-all --hazard-rate ${output_dir}/${output_prefix}_ref_hazard_ratio.csv -o ${output_dir}/${output_prefix}_ref_verbose_output.csv > ${output_dir}/${output_prefix}_ref.csv
+      ${kvmer_dir} analyze ./temp.fastq -o ${output_dir}/${output_prefix}
+      ${kvmer_dir} analyze ./temp.fastq -r ${reference_genome} --use-all -o ${output_dir}/${output_prefix}_ref
       rm ./temp.fastq
     done
   done

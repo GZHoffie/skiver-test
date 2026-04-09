@@ -11,7 +11,7 @@ best_path="./tools/best/target/release/best"
 mkdir -p ${output_dir}
 
 # Run minimap2
-${minimap2_path} -a ${reference_file} ${read_file} | samtools sort -o ${output_dir}/${output_prefix}.bam --write-index - 
+${minimap2_path} -a ${reference_file} ${read_file} -z 2000 | samtools sort -o ${output_dir}/${output_prefix}.bam --write-index - 
 
 # Run best
 ${best_path} ${output_dir}/${output_prefix}.bam ${reference_file} ${output_dir}/${output_prefix}
