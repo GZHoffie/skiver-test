@@ -14,7 +14,7 @@ simulated_data2_prefix="./data/simulated_data/Ecoli_O157_H7_random_depth_64"
 subsample_script="./experiments/coverage_dependence/subsample_reads.sh"
 # 64x, 32x, 16x, 8x, 4x, 2x, 1x
 
-read_identity=(90 92 94 96 98 100)
+read_identity=(96) #(90 92 94 96 98 100)
 #read_identity=(100)
 mix_ratios=(0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0)
 num_experiments=10
@@ -33,8 +33,8 @@ for id in ${read_identity[@]}; do
       $subsample_script ${input_file1} ${ratio1} ./temp1.fastq
       $subsample_script ${input_file2} ${ratio2} ./temp2.fastq
 
-      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq -o ${output_dir}/${output_prefix}
-      ${kvmer_dir} analyze ./temp1.fastq ./temp2.fastq --use-all -o ${output_dir}/${output_prefix}_no_filter
+      ${kvmer_dir} analyze -c 1000 ./temp1.fastq ./temp2.fastq -o ${output_dir}/${output_prefix}
+      ${kvmer_dir} analyze -c 1000 ./temp1.fastq ./temp2.fastq --use-all -o ${output_dir}/${output_prefix}_no_filter
 
       rm ./temp1.fastq ./temp2.fastq
     done
