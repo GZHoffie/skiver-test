@@ -71,4 +71,8 @@ prefetch SRR14560391
 fasterq-dump SRR14560391 --split-files -O ./data/environmental_samples/
 
 # Download SPMP
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR762/001/ERR7625321/ERR7625321.fastq.gz
+# the gzipped fastq seems corrupted?
+#wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR762/001/ERR7625321/ERR7625321.fastq.gz
+mkdir -p ./data/SPMP/
+prefetch ERR7625321
+fasterq-dump ERR7625321 --split-files -O ./data/SPMP
