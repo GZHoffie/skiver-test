@@ -54,7 +54,8 @@ done
 genome_path="./data/reference/Ecoli_O157_H7.fasta"
 identifier="Ecoli_O157_H7_random"
 identity=(100 98 96 94 92 90)
-coverage=(64)
+coverage=(128)
+
 
 mkdir -p $output_path
 
@@ -65,7 +66,7 @@ for depth in ${coverage[@]}; do
     badread simulate --reference ${genome_path} --quantity ${depth}x --error_model "random" \
         --qscore_model ideal --glitches 0,0,0 --junk_reads 0 --random_reads 0 --chimeras 0 \
         --identity ${id},100,0 --length 2000,1000 --start_adapter_seq "" --end_adapter_seq "" \
-        > ${output_file}
+        > ${output_file} &
   done
 done
 

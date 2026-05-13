@@ -15,19 +15,25 @@ subsample_coverage=(100 90 80 70 60 50 40 30 20 10)  #(64 32 16 8 4 2 1)
 #subsample_coverage=(128)
 #num_experiments=20
 num_experiments=20
+option="-c 1000"
 
 chmod +x $subsample_script
 
 for id in ${read_identity[@]}; do
-  input_file="${simulated_data_prefix}_id_${id}_homogeneous.fastq"
+  input_file="${simulated_data_prefix}_id_${id}.fastq"
   for cov in ${subsample_coverage[@]}; do
     subsample_rate=$(echo "scale=6; ${cov}/${original_coverage}" | bc)
     for exp_num in $(seq 1 $num_experiments); do
       output_prefix="Ecoli_K12_MG1655_depth_${cov}_id_${id}_exp_${exp_num}"
       $subsample_script ${input_file} ${subsample_rate} ./temp.fastq
-      ${kvmer_dir} analyze ./temp.fastq -o ${output_dir}/${output_prefix}
-      ${kvmer_dir} analyze ./temp.fastq -r ${reference_genome} --use-all -o ${output_dir}/${output_prefix}_ref
+      ${kvmer_dir} analyze ${option} ./temp.fastq -o ${output_dir}/${output_prefix}
+      ${kvmer_dir} analyze ${option} ./temp.fastq -r ${reference_genome} --use-all -o ${output_dir}/${output_prefix}_ref
       rm ./temp.fastq
+      rm ${output_dir}/${output_prefix}*.kvmer.csv
+      rm ${output_dir}/${output_prefix}*.summary_error_spectrum*.csv
+      rm ${output_dir}/${output_prefix}*.summary_read_position.csv
+      rm ${output_dir}/${output_prefix}*.summary_phred.csv
+      rm ${output_dir}/${output_prefix}*.summary_gc_content.csv
     done
   done
 done
@@ -39,7 +45,7 @@ output_dir="./output/coverage_dependence_map"
 mkdir -p $output_dir
 
 for id in ${read_identity[@]}; do
-  ./tools/run_best_minimap.sh ${simulated_data_prefix}_id_${id}_homogeneous.fastq ${reference_genome} ${output_dir} Ecoli_K12_MG1655_depth_128_id_${id}
+  ./tools/run_best_minimap.sh ${simulated_data_prefix}_id_${id}.fastq ${reference_genome} ${output_dir} Ecoli_K12_MG1655_depth_128_id_${id}
 done
 
 # Find the number of k-mer hits

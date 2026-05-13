@@ -12,6 +12,14 @@ sylph profile -u $sylph_db_path ${data_path}/SRR13128014.fastq > ${output_path}/
 sylph profile -u $sylph_db_path ./data/SPMP/ERR7625321.fastq > ${output_path}/ERR7625321_sylph_u.tsv
 sylph profile -u  $sylph_db_path -1 ./data/environmental_samples/SRR14560391_1.fastq -2 ./data/environmental_samples/SRR14560391_2.fastq > ${output_path}/SRR14560391_sylph_u.tsv
 
+# profile using the ground truth database
+sylph sketch ./data/zymo/ZymoBIOMICS.STD.refseq.v2/Genomes/*.fasta -o ${output_path}/zymo_mock
+sylph sketch ./data/zymo/D6331.refseq/genomes/*.fasta -o ${output_path}/zymo_gut
+
+sylph profile -u ${output_path}/zymo_mock.syldb ${data_path}/ERR3152366.fastq.gz > ${output_path}/ERR3152366_sylph_gt_u.tsv
+sylph profile -u ${output_path}/zymo_gut.syldb ${data_path}/SRR13128014.fastq > ${output_path}/SRR13128014_sylph_gt_u.tsv
+
+
 # Download the genome accessions
 python ./data/download_genomes_from_sylph_output.py output/predict_unclassified_reads/ERR3152366_sylph_u.tsv ${output_path}/ERR3152366
 python ./data/download_genomes_from_sylph_output.py output/predict_unclassified_reads/SRR13128014_sylph_u.tsv ${output_path}/SRR13128014
@@ -42,7 +50,6 @@ rm ${output_path}/*.bam
 
 # Run skiver to predict the survival rate
 mkdir -p ${output_path}/skiver
-option="-k 17 -v 17"
 skiver sketch ${option} ${data_path}/ERR3152366.fastq.gz -o ${output_path}/skiver/ERR3152366.kvmer
 skiver sketch ${option} ${data_path}/SRR13128014.fastq -o ${output_path}/skiver/SRR13128014.kvmer
 skiver sketch ${option} ./data/SPMP/ERR7625321.fastq -o ${output_path}/skiver/ERR7625321.kvmer
@@ -55,11 +62,6 @@ skiver analyze ${option} ${output_path}/skiver/SRR14560391.kvmer -o ${output_pat
 
 
 #read_id=np.exp(-lambda * (k ** beta)) ** (1/k), k=31
-#lambda=0.090999, beta=0.841738
-sylph profile -u $sylph_db_path ${data_path}/ERR3152366.fastq.gz --read-seq-id 94.8526  > ${output_path}/ERR3152366_sylph_u_read_id.tsv
-#lambda=0.001069, beta=0.958861
-sylph profile -u $sylph_db_path ${data_path}/SRR13128014.fastq --read-seq-id 99.9072 > ${output_path}/SRR13128014_sylph_u_read_id.tsv
-#lambda=0.070638, beta=0.893494
-sylph profile -u $sylph_db_path ./data/SPMP/ERR7625321.fastq --read-seq-id 95.2181 > ${output_path}/ERR7625321_sylph_u_read_id.tsv
-#lambda=0.004392, beta=0.804060
-sylph profile -u  $sylph_db_path -1 ./data/environmental_samples/SRR14560391_1.fastq -2 ./data/environmental_samples/SRR14560391_2.fastq --read-seq-id 99.7761 > ${output_path}/SRR14560391_sylph_u_read_id.tsv
+# With the ground truth database
+sylph profile -u ${output_path}/zymo_mock.syldb ${data_path}/ERR3152366.fastq.gz --read-seq-id $(python ./experiments/predict_unclassified_reads/calculate_read_id.py -s ./output/zymo/skiver/ERR3152366.summary_error_rate.csv) > ${output_path}/ERR3152366_sylph_gt_u_read_id.tsv
+sylph profile -u ${output_path}/zymo_gut.syldb ${data_path}/SRR13128014.fastq --read-seq-id $(python ./experiments/predict_unclassified_reads/calculate_read_id.py -s ./output/zymo/skiver/SRR13128014.summary_error_rate.csv) > ${output_path}/SRR13128014_sylph_gt_u_read_id.tsv
