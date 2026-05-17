@@ -21,14 +21,13 @@ genomescope2.0
 yak
 merylDB
 # data
-SRR*
-ERR*
 data/zymo
 data/Mutational_spectra_data-v1
 
 .vscode
 
-*.png
+#*.png
 *.idx
+*.sra
 data/chrisruis-Mutational_spectra_data-58d4c19
 KMC3.2.1.linux

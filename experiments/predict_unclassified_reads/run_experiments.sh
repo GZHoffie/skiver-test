@@ -16,8 +16,8 @@ sylph profile -u  $sylph_db_path -1 ./data/environmental_samples/SRR14560391_1.f
 sylph sketch ./data/zymo/ZymoBIOMICS.STD.refseq.v2/Genomes/*.fasta -o ${output_path}/zymo_mock
 sylph sketch ./data/zymo/D6331.refseq/genomes/*.fasta -o ${output_path}/zymo_gut
 
-sylph profile -u ${output_path}/zymo_mock.syldb ${data_path}/ERR3152366.fastq.gz > ${output_path}/ERR3152366_sylph_gt_u.tsv
-sylph profile -u ${output_path}/zymo_gut.syldb ${data_path}/SRR13128014.fastq > ${output_path}/SRR13128014_sylph_gt_u.tsv
+sylph profile -m 0 -u ${output_path}/zymo_mock.syldb ${data_path}/ERR3152366.fastq.gz > ${output_path}/ERR3152366_sylph_gt_u.tsv
+sylph profile -m 0 -u ${output_path}/zymo_gut.syldb ${data_path}/SRR13128014.fastq > ${output_path}/SRR13128014_sylph_gt_u.tsv
 
 
 # Download the genome accessions
@@ -63,5 +63,5 @@ skiver analyze ${option} ${output_path}/skiver/SRR14560391.kvmer -o ${output_pat
 
 #read_id=np.exp(-lambda * (k ** beta)) ** (1/k), k=31
 # With the ground truth database
-sylph profile -u ${output_path}/zymo_mock.syldb ${data_path}/ERR3152366.fastq.gz --read-seq-id $(python ./experiments/predict_unclassified_reads/calculate_read_id.py -s ./output/zymo/skiver/ERR3152366.summary_error_rate.csv) > ${output_path}/ERR3152366_sylph_gt_u_read_id.tsv
-sylph profile -u ${output_path}/zymo_gut.syldb ${data_path}/SRR13128014.fastq --read-seq-id $(python ./experiments/predict_unclassified_reads/calculate_read_id.py -s ./output/zymo/skiver/SRR13128014.summary_error_rate.csv) > ${output_path}/SRR13128014_sylph_gt_u_read_id.tsv
+sylph profile -m 0 -u ${output_path}/zymo_mock.syldb ${data_path}/ERR3152366.fastq.gz --read-seq-id $(python ./experiments/predict_unclassified_reads/calculate_read_id.py -s ./output/zymo/skiver/ERR3152366.summary_error_rate.csv) > ${output_path}/ERR3152366_sylph_gt_u_read_id.tsv
+sylph profile -m 0 -u ${output_path}/zymo_gut.syldb ${data_path}/SRR13128014.fastq --read-seq-id $(python ./experiments/predict_unclassified_reads/calculate_read_id.py -s ./output/zymo/skiver/SRR13128014.summary_error_rate.csv) > ${output_path}/SRR13128014_sylph_gt_u_read_id.tsv

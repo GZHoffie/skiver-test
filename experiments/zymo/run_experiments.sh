@@ -70,42 +70,41 @@ for file in ${output_dir}/*.summary_identity_stats.csv; do
 done
 
 
-# kvmer
+## Skiver
 kvmer_dir="skiver"
+option=""
+kvmer_suffix=""
+b_subtilis_ref="./data/zymo/ZymoBIOMICS.STD.refseq.v2/Genomes/Bacillus_subtilis_complete_genome.fasta"
+b_subtilis_assembly="./data/zymo/mCaller_analysis_scripts/assemblies/bsubtilis_pb.fasta"
 
-# Sketching, forward only
-/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_sketch.time -v ${kvmer_dir} sketch ./data/zymo/ERR3152366.fastq.gz --forward-only -o ${output_dir}/ERR3152366.kvmer  2> ${output_dir}/log/ERR3152366_kvmer_sketch.log
-/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_sketch.time -v ${kvmer_dir} sketch ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz --forward-only -o ${output_dir}/ERR2935851.kvmer  2> ${output_dir}/log/ERR2935851_kvmer_sketch.log
-/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_sketch.time -v ${kvmer_dir} sketch ./data/zymo/SRR7498042.fastq --forward-only -o ${output_dir}/SRR7498042.kvmer  2> ${output_dir}/log/SRR7498042_kvmer_sketch.log 
-/usr/bin/time -o ${output_dir}/log/SRR13128014_kvmer_sketch.time -v ${kvmer_dir} sketch ./data/zymo/SRR13128014.fastq --forward-only -o ${output_dir}/SRR13128014.kvmer  2> ${output_dir}/log/SRR13128014_kvmer_sketch.log
+# Create sketches
+echo "Creating sketches for Zymo mock community datasets ..."
+/usr/bin/time -o ${output_dir}/log/skiver/ERR3152366_sketch.time -v ${kvmer_dir} sketch ./data/zymo/ERR3152366.fastq.gz $option -o ${output_dir}/skiver/ERR3152366${kvmer_suffix}.kvmer 2> ${output_dir}/log/skiver/ERR3152366_sketch.log
+/usr/bin/time -o ${output_dir}/log/skiver/ERR2935851_sketch.time -v ${kvmer_dir} sketch ./data/zymo/ERR2935851_1.fastq.gz $option ./data/zymo/ERR2935851_2.fastq.gz -o ${output_dir}/skiver/ERR2935851${kvmer_suffix}.kvmer 2> ${output_dir}/log/skiver/ERR2935851_sketch.log
+/usr/bin/time -o ${output_dir}/log/skiver/SRR7498042_sketch.time -v ${kvmer_dir} sketch ./data/zymo/SRR7498042.fastq $option -o ${output_dir}/skiver/SRR7498042${kvmer_suffix}.kvmer 2> ${output_dir}/log/skiver/SRR7498042_sketch.log
+/usr/bin/time -o ${output_dir}/log/skiver/SRR13128014_sketch.time -v ${kvmer_dir} sketch ./data/zymo/SRR13128014.fastq $option -o ${output_dir}/skiver/SRR13128014${kvmer_suffix}.kvmer 2> ${output_dir}/log/skiver/SRR13128014_sketch.log
 
-# Sketching, bidirectional
-/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_sketch_bi.time -v ${kvmer_dir} sketch ./data/zymo/ERR3152366.fastq.gz -o ${output_dir}/ERR3152366_bi.kvmer  2> ${output_dir}/log/ERR3152366_kvmer_sketch_bi.log
-/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_sketch_bi.time -v ${kvmer_dir} sketch ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz -o ${output_dir}/ERR2935851_bi.kvmer  2> ${output_dir}/log/ERR2935851_kvmer_sketch_bi.log
-/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_sketch_bi.time -v ${kvmer_dir} sketch ./data/zymo/SRR7498042.fastq -o ${output_dir}/SRR7498042_bi.kvmer  2> ${output_dir}/log/SRR7498042_kvmer_sketch_bi.log
-/usr/bin/time -o ${output_dir}/log/SRR13128014_kvmer_sketch_bi.time -v ${kvmer_dir} sketch ./data/zymo/SRR13128014.fastq -o ${output_dir}/SRR13128014_bi.kvmer  2> ${output_dir}/log/SRR13128014_kvmer_sketch_bi.log
-
-
-# Analyze without reference, forward only
-/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_analyze.time -v ${kvmer_dir} analyze ${output_dir}/ERR3152366.kvmer --forward-only --hazard-rate ${output_dir}/ERR3152366_kvmer_hazard_ratio.csv > ${output_dir}/ERR3152366_kvmer.csv 2> ${output_dir}/log/ERR3152366_kvmer_analyze.log
-/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_analyze.time -v ${kvmer_dir} analyze ${output_dir}/ERR2935851.kvmer --forward-only --hazard-rate ${output_dir}/ERR2935851_kvmer_hazard_ratio.csv > ${output_dir}/ERR2935851_kvmer.csv 2> ${output_dir}/log/ERR2935851_kvmer_analyze.log
-/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_analyze.time -v ${kvmer_dir} analyze ${output_dir}/SRR7498042.kvmer --forward-only --hazard-rate ${output_dir}/SRR7498042_kvmer_hazard_ratio.csv > ${output_dir}/SRR7498042_kvmer.csv 2> ${output_dir}/log/SRR7498042_kvmer_analyze.log
-/usr/bin/time -o ${output_dir}/log/SRR13128014_kvmer_analyze.time -v ${kvmer_dir} analyze ${output_dir}/SRR13128014.kvmer --forward-only --hazard-rate ${output_dir}/SRR13128014_kvmer_hazard_ratio.csv > ${output_dir}/SRR13128014_kvmer.csv 2> ${output_dir}/log/SRR13128014_kvmer_analyze.log
-# Analyze without reference --bidirectional
-/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_bi_analyze.time -v ${kvmer_dir} analyze ${output_dir}/ERR3152366_bi.kvmer --hazard-rate ${output_dir}/ERR3152366_bi_kvmer_hazard_ratio.csv > ${output_dir}/ERR3152366_bi_kvmer.csv 2> ${output_dir}/log/ERR3152366_kvmer_bi_analyze.log
-/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_bi_analyze.time -v ${kvmer_dir} analyze ${output_dir}/ERR2935851_bi.kvmer --hazard-rate ${output_dir}/ERR2935851_bi_kvmer_hazard_ratio.csv > ${output_dir}/ERR2935851_bi_kvmer.csv 2> ${output_dir}/log/ERR2935851_kvmer_bi_analyze.log
-/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_bi_analyze.time -v ${kvmer_dir} analyze ${output_dir}/SRR7498042_bi.kvmer --hazard-rate ${output_dir}/SRR7498042_bi_kvmer_hazard_ratio.csv > ${output_dir}/SRR7498042_bi_kvmer.csv 2> ${output_dir}/log/SRR7498042_kvmer_bi_analyze.log
-/usr/bin/time -o ${output_dir}/log/SRR13128014_kvmer_bi_analyze.time -v ${kvmer_dir} analyze ${output_dir}/SRR13128014_bi.kvmer --hazard-rate ${output_dir}/SRR13128014_bi_kvmer_hazard_ratio.csv > ${output_dir}/SRR13128014_bi_kvmer.csv 2> ${output_dir}/log/SRR13128014_kvmer_bi_analyze.log
+# Analyze without reference
+echo "Analyzing sketches for Zymo mock community datasets without reference ..."
+/usr/bin/time -o ${output_dir}/log/skiver/ERR3152366_analyze.time -v ${kvmer_dir} analyze ${output_dir}/skiver/ERR3152366${kvmer_suffix}.kvmer $option -o ${output_dir}/skiver/ERR3152366${kvmer_suffix}
+/usr/bin/time -o ${output_dir}/log/skiver/ERR2935851_analyze.time -v ${kvmer_dir} analyze ${output_dir}/skiver/ERR2935851${kvmer_suffix}.kvmer $option -o ${output_dir}/skiver/ERR2935851${kvmer_suffix}
+/usr/bin/time -o ${output_dir}/log/skiver/SRR7498042_analyze.time -v ${kvmer_dir} analyze ${output_dir}/skiver/SRR7498042${kvmer_suffix}.kvmer $option -o ${output_dir}/skiver/SRR7498042${kvmer_suffix}
+/usr/bin/time -o ${output_dir}/log/skiver/SRR13128014_analyze.time -v ${kvmer_dir} analyze ${output_dir}/skiver/SRR13128014${kvmer_suffix}.kvmer $option -o ${output_dir}/skiver/SRR13128014${kvmer_suffix}
 
 
 # Analyze with reference
-/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_ref_analyze.time -v ${kvmer_dir} analyze --forward-only -l 1 --use-all -r ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ${output_dir}/ERR3152366.kvmer --hazard-rate ${output_dir}/ERR3152366_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR3152366_kvmer_ref.csv 2> ${output_dir}/log/ERR3152366_kvmer_ref_analyze.log
-/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_ref_analyze.time -v ${kvmer_dir} analyze --forward-only -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/ERR2935851.kvmer --hazard-rate ${output_dir}/ERR2935851_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR2935851_kvmer_ref.csv 2> ${output_dir}/log/ERR2935851_kvmer_ref_analyze.log
-/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_ref_analyze.time -v ${kvmer_dir} analyze --forward-only -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/SRR7498042.kvmer --hazard-rate ${output_dir}/SRR7498042_kvmer_ref_hazard_ratio.csv > ${output_dir}/SRR7498042_kvmer_ref.csv 2> ${output_dir}/log/SRR7498042_kvmer_ref_analyze.log
-/usr/bin/time -o ${output_dir}/log/SRR13128014_kvmer_ref_analyze.time -v ${kvmer_dir} analyze --forward-only -l 1 --use-all -r ./data/zymo/D6331.refseq/zymo_gut_microbiome_reference.fasta ${output_dir}/SRR13128014.kvmer --hazard-rate ${output_dir}/SRR13128014_kvmer_ref_hazard_ratio.csv > ${output_dir}/SRR13128014_kvmer_ref.csv 2> ${output_dir}/log/SRR13128014_kvmer_ref_analyze.log
+echo "Analyzing sketches for Zymo mock community datasets with reference ..."
+/usr/bin/time -o ${output_dir}/log/skiver/ERR3152366_analyze_ref.time -v ${kvmer_dir} analyze ${output_dir}/skiver/ERR3152366${kvmer_suffix}.kvmer $option --use-all -r ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta -o ${output_dir}/skiver/ERR3152366_ref${kvmer_suffix}
+/usr/bin/time -o ${output_dir}/log/skiver/ERR2935851_analyze_ref.time -v ${kvmer_dir} analyze ${output_dir}/skiver/ERR2935851${kvmer_suffix}.kvmer $option --use-all -r ${b_subtilis_assembly} -o ${output_dir}/skiver/ERR2935851_ref${kvmer_suffix}
+/usr/bin/time -o ${output_dir}/log/skiver/SRR7498042_analyze_ref.time -v ${kvmer_dir} analyze ${output_dir}/skiver/SRR7498042${kvmer_suffix}.kvmer $option --use-all -r ${b_subtilis_assembly} -o ${output_dir}/skiver/SRR7498042_ref${kvmer_suffix}
+/usr/bin/time -o ${output_dir}/log/skiver/SRR13128014_analyze_ref.time -v ${kvmer_dir} analyze ${output_dir}/skiver/SRR13128014${kvmer_suffix}.kvmer $option --use-all -r ./data/zymo/D6331.refseq/zymo_gut_microbiome_reference.fasta -o ${output_dir}/skiver/SRR13128014_ref${kvmer_suffix}
 
-# Analyze with reference --bidirectional
-/usr/bin/time -o ${output_dir}/log/ERR3152366_kvmer_bi_ref_analyze.time -v ${kvmer_dir} analyze -l 1 --use-all -r ./data/zymo/ZymoBIOMICS.STD.refseq.v2/zymo_community_reference.fasta ${output_dir}/ERR3152366_bi.kvmer --hazard-rate ${output_dir}/ERR3152366_bi_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR3152366_bi_kvmer_ref.csv 2> ${output_dir}/log/ERR3152366_kvmer_bi_ref_analyze.log
-/usr/bin/time -o ${output_dir}/log/ERR2935851_kvmer_bi_ref_analyze.time -v ${kvmer_dir} analyze -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/ERR2935851_bi.kvmer --hazard-rate ${output_dir}/ERR2935851_bi_kvmer_ref_hazard_ratio.csv > ${output_dir}/ERR2935851_bi_kvmer_ref.csv 2> ${output_dir}/log/ERR2935851_kvmer_bi_ref_analyze.log
-/usr/bin/time -o ${output_dir}/log/SRR7498042_kvmer_bi_ref_analyze.time -v ${kvmer_dir} analyze -l 1 --use-all -r ${b_subtilis_ref} ${output_dir}/SRR7498042_bi.kvmer --hazard-rate ${output_dir}/SRR7498042_bi_kvmer_ref_hazard_ratio.csv > ${output_dir}/SRR7498042_bi_kvmer_ref.csv 2> ${output_dir}/log/SRR7498042_kvmer_bi_ref_analyze.log
-/usr/bin/time -o ${output_dir}/log/SRR13128014_kvmer_bi_ref_analyze.time -v ${kvmer_dir} analyze -l 1 --use-all -r ./data/zymo/D6331.refseq/zymo_gut_microbiome_reference.fasta ${output_dir}/SRR13128014_bi.kvmer --hazard-rate ${output_dir}/SRR13128014_bi_kvmer_ref_hazard_ratio.csv > ${output_dir}/SRR13128014_bi_kvmer_ref.csv 2> ${output_dir}/log/SRR13128014_kvmer_bi_ref_analyze.log
+
+# Plot the results
+# Assume skiver is downloaded in the home directory
+mkdir -p ./figures/skiver
+
+for accession in ERR3152366 ERR2935851 SRR7498042 SRR13128014; do
+    python ~/skiver/scripts/plot_all.py ${output_dir}/skiver/${accession} -o ./figures/skiver/${accession}
+    python ~/skiver/scripts/plot_all.py ${output_dir}/skiver/${accession}_ref -o ./figures/skiver/${accession}_ref
+done

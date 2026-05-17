@@ -7,19 +7,24 @@ mkdir -p ${output_path}/log
 
 skiver sketch ${data_path}/SRR11742949_*.fastq -o ${output_path}/SRR11742949.kvmer
 skiver sketch ${data_path}/SRR14560391_*.fastq -o ${output_path}/SRR14560391.kvmer
-skiver sketch ./data/ERR7625321.fastq.gz -o ${output_path}/ERR7625321.kvmer
+skiver sketch ./data/SPMP/ERR7625321.fastq -o ${output_path}/ERR7625321.kvmer
 
 skiver analyze ${output_path}/SRR11742949.kvmer -o ${output_path}/SRR11742949
 skiver analyze ${output_path}/SRR14560391.kvmer -o ${output_path}/SRR14560391
 skiver analyze ${output_path}/ERR7625321.kvmer -o ${output_path}/ERR7625321
 
-# Run sylph
-sylph_db_path="/home/ubuntu/tp-test/databases/gtdb-r220-c200-dbv1.syldb"
-/usr/bin/time -o ${output_path}/log/SRR11742949_sylph.time sylph profile $sylph_db_path -1 ${data_path}/SRR11742949_1.fastq -2 ${data_path}/SRR11742949_2.fastq > ${output_path}/SRR11742949_sylph.tsv
-/usr/bin/time -o ${output_path}/log/SRR14560391_sylph.time sylph profile $sylph_db_path -1 ${data_path}/SRR14560391_1.fastq -2 ${data_path}/SRR14560391_2.fastq > ${output_path}/SRR14560391_sylph.tsv
+skiver analyze ${output_path}/SRR11742949.kvmer --use-all -o ${output_path}/SRR11742949_no_filt
+skiver analyze ${output_path}/SRR14560391.kvmer --use-all -o ${output_path}/SRR14560391_no_filt
+skiver analyze ${output_path}/ERR7625321.kvmer --use-all -o ${output_path}/ERR7625321_no_filt
 
-/usr/bin/time -o ${output_path}/log/SRR11742949_sylph_u.time sylph profile -u $sylph_db_path -1 ${data_path}/SRR11742949_1.fastq -2 ${data_path}/SRR11742949_2.fastq > ${output_path}/SRR11742949_sylph_u.tsv
-/usr/bin/time -o ${output_path}/log/SRR14560391_sylph_u.time sylph profile -u $sylph_db_path -1 ${data_path}/SRR14560391_1.fastq -2 ${data_path}/SRR14560391_2.fastq > ${output_path}/SRR14560391_sylph_u.tsv
+# Plot the results
+# Assume skiver is downloaded in the home directory
+mkdir -p ./figures/skiver
 
-sylph profile -u $sylph_db_path -1 ${data_path}/SRR11742949_1.fastq -2 ${data_path}/SRR11742949_2.fastq --read-seq-id 99.8699  > ${output_path}/SRR11742949_sylph_u_read_id.tsv
-sylph profile -u $sylph_db_path -1 ${data_path}/SRR14560391_1.fastq -2 ${data_path}/SRR14560391_2.fastq --read-seq-id 99.8216 > ${output_path}/SRR14560391_sylph_u_read_id.tsv
+python ~/skiver/scripts/plot_all.py ${output_path}/SRR11742949 -o ./figures/skiver/SRR11742949
+python ~/skiver/scripts/plot_all.py ${output_path}/SRR14560391 -o ./figures/skiver/SRR14560391
+python ~/skiver/scripts/plot_all.py ${output_path}/ERR7625321 -o ./figures/skiver/ERR7625321
+
+python ~/skiver/scripts/plot_all.py ${output_path}/SRR11742949_no_filt -o ./figures/skiver/SRR11742949_no_filt
+python ~/skiver/scripts/plot_all.py ${output_path}/SRR14560391_no_filt -o ./figures/skiver/SRR14560391_no_filt
+python ~/skiver/scripts/plot_all.py ${output_path}/ERR7625321_no_filt -o ./figures/skiver/ERR7625321_no_filt
