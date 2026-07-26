@@ -41,7 +41,7 @@ do
 done
 
 # Run GenomeScope on simulated data
-output_dir=./output/additional_information/genomescope_simulated_data
+output_dir=output/additional_information/genomescope_simulated_data
 mkdir -p ./output/additional_information/genomescope_simulated_data
 simulated_data_prefix="./data/simulated_data/Ecoli_K12_MG1655_random_depth_128"
 subsample_script="./experiments/coverage_dependence/subsample_reads.sh"
@@ -66,7 +66,7 @@ done
 
 
 # Try running skiver using different values of k and v and record memory/index size
-output_dir=./output/additional_information/skiver_k_v_experiments
+output_dir=output/additional_information/skiver_k_v_experiments
 mkdir -p ${output_dir}/log
 k=(17 23 29)
 v=(11 17 23)
@@ -78,4 +78,29 @@ for k_val in ${k[@]}; do
     /usr/bin/time -o ${output_dir}/log/${output_prefix}.time -v \
      skiver sketch ${read_file} -o ${output_dir}/${output_prefix} -k ${k_val} -v ${v_val}
   done
+done
+
+
+# Try running skiver using different values of c and analyze accuracy
+output_dir=output/additional_information/skiver_c_experiments
+mkdir -p ${output_dir}/log
+c=(3000 6000 12000 24000 48000)
+read_file=./data/zymo/ERR3152366.fastq.gz
+
+for c_val in ${c[@]}; do
+  output_prefix="ERR3152366_c_${c_val}"
+  /usr/bin/time -o ${output_dir}/log/${output_prefix}.time -v \
+   skiver analyze ${read_file} -o ${output_dir}/${output_prefix} -c ${c_val}
+done
+
+
+# Try running skiver on Illumina dataset with some bases on the ends trimmed
+output_dir=output/additional_information/skiver_trimmed_illumina
+mkdir -p ${output_dir}/log
+trim_base=(0 5 10)
+
+for trim in ${trim_base[@]}; do
+  output_prefix="ERR2935851_trim_${trim}"
+  skiver sketch ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz -b ${trim} -f ${trim} -o ${output_dir}/${output_prefix}.kvmer
+  skiver analyze ${output_dir}/${output_prefix}.kvmer -o ${output_dir}/${output_prefix}
 done
