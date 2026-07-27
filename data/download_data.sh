@@ -76,3 +76,7 @@ fasterq-dump SRR14560391 --split-files -O ./data/environmental_samples/
 mkdir -p ./data/SPMP/
 prefetch ERR7625321
 fasterq-dump ERR7625321 --split-files -O ./data/SPMP
+
+# Amplicon data
+prefetch SRR1204979	
+fasterq-dump SRR1204979 --split-files -O ./data/amplicon sample/
