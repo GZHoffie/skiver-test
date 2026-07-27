@@ -101,6 +101,14 @@ trim_base=(0 5 10)
 
 for trim in ${trim_base[@]}; do
   output_prefix="ERR2935851_trim_${trim}"
-  skiver sketch ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz -b ${trim} -f ${trim} -o ${output_dir}/${output_prefix}.kvmer
+  #skiver sketch ./data/zymo/ERR2935851_1.fastq.gz ./data/zymo/ERR2935851_2.fastq.gz -b ${trim} -f ${trim} -o ${output_dir}/${output_prefix}.kvmer
   skiver analyze ${output_dir}/${output_prefix}.kvmer -o ${output_dir}/${output_prefix}
 done
+
+
+# Run on amplicon sequencing data
+output_dir=output/additional_information/skiver_amplicon
+mkdir -p ${output_dir}/log
+
+skiver analyze ./data/amplicon_sample/SRR1204979_1.fastq -o ${output_dir}/SRR1204979_1
+skiver analyze ./data/amplicon_sample/SRR23176493.fastq -o ${output_dir}/SRR23176493
