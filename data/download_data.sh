@@ -79,4 +79,7 @@ fasterq-dump ERR7625321 --split-files -O ./data/SPMP
 
 # Amplicon data
 prefetch SRR1204979	
-fasterq-dump SRR1204979 --split-files -O ./data/amplicon sample/
+fasterq-dump SRR1204979 --split-files -O ./data/amplicon_sample/
+
+prefetch SRR23176493
+fasterq-dump SRR23176493 --split-files -O ./data/amplicon_sample/
